@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WAD - Player</title>
+
+    <style>
+        .container {
+            height: 200px;
+            position: relative;
+        }
+
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            font-size: large;
+        }
+
+        button {
+            height: 200px;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="center" class="center">
+            <!--<button id="liveshopping">Join show now</button>-->
+        </div>
+    </div>
+
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        window.onBambuserLiveShoppingReady = (player) => {
+            let experimental = {
+                // TODO Pass chat name here. 
+                // In this sample, the chatName 'John D' will be displayed when the user post comment.
+                //chatName: 'John D',
+                hasAcceptedTerms: true,
+            };
+
+            let userName = getUrlParameter('username');
+            if (userName)
+                experimental.chatName = userName;
+
+            player.configure({
+                experimental: experimental
+            });
+        };
+
+
+        (function () {
+            if (!window.initBambuserLiveShopping) {
+                window.initBambuserLiveShopping = function (item) { window.initBambuserLiveShopping.queue.push(item) }; window.initBambuserLiveShopping.queue = [];
+                var scriptNode = document.createElement('script');
+                scriptNode['src'] = 'https://lcx-embed.bambuser.com/bambuser/embed.js';
+                document.body.appendChild(scriptNode);
+            }
+
+            let bambId = getUrlParameter('bambid'); // qnOmJsvdAH9EoFhz8w6c
+            if (bambId) {
+                window.initBambuserLiveShopping({
+                    showId: bambId,
+                    // Comment this line for autoplay:
+                    //node: document.getElementById('liveshopping'), 
+                    type: "overlay",
+                });
+            }
+            else {
+                //document.getElementById('liveshopping').innerHTML = 'No show id specified :(';
+                document.getElementById('center').innerHTML = 'No show id specified :(';
+            }
+        })();
+    </script>
+
+</body>
+</html>
