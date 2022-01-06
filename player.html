@@ -53,8 +53,12 @@
                 experimental.chatName = userName;
 
             player.configure({
-                experimental: experimental
+                experimental: experimental,
+                buttons: {
+                    dismiss: player.BUTTON.NONE,
+                },
             });
+
         };
 
 
